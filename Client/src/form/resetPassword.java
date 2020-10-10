@@ -20,6 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import student.Student;
 import student.StudentLogin;
+import static student.StudentLogin.a;
 
 
 /**
@@ -40,13 +41,11 @@ public class resetPassword {
            System.out.println("SocketNewpassword");
            Socket s = new Socket("192.168.1.125",35600);
            PrintWriter out = new PrintWriter(s.getOutputStream());
-           System.out.println(StudentLogin.myStudent.getUsername());
-           System.out.println(StudentLogin.myStudent.getUsername());
-           System.out.println(StudentLogin.myStudent.getUsername());
            out.println(StudentLogin.myStudent.getUsername());
            out.println(result);
            out.flush();
            out.close();
+           a.setVisible(false);
             }catch (IOException e){
                 
                 

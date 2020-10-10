@@ -6,6 +6,7 @@
 package student;
 
 import Model.StudentModel;
+import Socket.sendImg;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -105,6 +106,8 @@ public class StudentLogin extends javax.swing.JFrame {
             PrintWriter out1 = new PrintWriter(s.getOutputStream());
             out1.println("login");
             out1.flush();
+            String myip = myStudent.getIp();
+            out1.println(myip);
             out1.println(jTextField1.getText());
             StudentID = jTextField1.getText();
             myStudent.setUsername(StudentID);
@@ -147,11 +150,9 @@ public class StudentLogin extends javax.swing.JFrame {
 
     }
     public static void main(String args[]) throws IOException, InterruptedException {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
+ 
+                
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -178,9 +179,7 @@ public class StudentLogin extends javax.swing.JFrame {
         }
         InetAddress inetAddress = InetAddress.getLocalHost();
         InetAddress address = InetAddress.getByName(inetAddress.getHostAddress());
-     
         myStudent.setIp(inetAddress.getHostAddress());
-        
         NetworkInterface ni =  NetworkInterface.getByInetAddress(address);
             byte[] mac = ni.getHardwareAddress();
             StringBuilder sb = new StringBuilder();
@@ -195,17 +194,9 @@ public class StudentLogin extends javax.swing.JFrame {
         out.println(sb.toString());
         out.flush();
         s.close();
-        
-        //</editor-fold>
-        /* Create and display the form */
         b = new Student();
         b.study();
         a = new StudentLogin();
-        
-//        b.Sender.start();
-        
-//        System.out.println("Sendimg");
-//        a.Sendimg();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 a.setVisible(true);

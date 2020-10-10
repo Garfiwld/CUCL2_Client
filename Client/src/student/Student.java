@@ -94,24 +94,26 @@ public class Student {
 //                            Subject = read.readLine();
 //                            System.out.println(Subject);
                             Section = read.readLine();
-                            System.out.println(Section);
                             StudentID = StudentLogin.StudentID;
                             JTextField jpf = new JPasswordField(15);
                             JLabel jl = new JLabel("Please input your new password");
                             Object object[] = {jpf, jl};
                             String status = read.readLine();
-                            System.out.println(status);
                             if (status.equals("yes")) {
                                 System.out.println("in");
                                 resetPassword.setNewPassword();
-                            }
-                            
+                            }else a.setVisible(false);
+                            String banSoftewareList = read.readLine();
+                            String banWebList = read.readLine();
 //                            new BlockProgram();
                             //new BlockWeb();
 //                            StudentLogin.a();
                             break;
-                        case "failed":
-                            JOptionPane.showMessageDialog(a.getContentPane(), "login faield");
+                        case "failedC":
+                            JOptionPane.showMessageDialog(a.getContentPane(), "Login Failed Course Not Exits");
+                            break;
+                         case "failedCre":
+                            JOptionPane.showMessageDialog(a.getContentPane(), "Login Failed Credential Invalid");
                             break;
                         default:
                             port = Integer.parseInt(msg);
