@@ -12,7 +12,7 @@ import java.net.InetAddress;
  * @author PC2
  */
 public class StudentModel {
-    String ip,macaddress,username;
+    String ip,macaddress,username,Course;
     public void setMacaddress(String Macaddress){
         this.macaddress = Macaddress;
     }
@@ -30,5 +30,11 @@ public class StudentModel {
     }
     public String getUsername(){
         return this.username;
+    }
+    public void setCourse(String Course){
+        this.Course = Course;
+    }
+    public String getCourse(){
+        return this.Course;
     }
 }

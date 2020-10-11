@@ -5,10 +5,12 @@
         <group>
             <file>file:/C:/Controllab/Client/src/student/captureImage.java</file>
             <file>file:/C:/Controllab/Client/src/student/Student.java</file>
+            <file>file:/C:/Controllab/Client/src/form/resetPassword.java</file>
+            <file>file:/C:/Controllab/Client/src/student/ReciveMsg.java</file>
             <file>file:/C:/Controllab/Client/src/student/BlockProgram.java</file>
             <file>file:/C:/Controllab/Client/src/Socket/sendImg.java</file>
             <file>file:/C:/Controllab/Client/src/student/StudentLogin.java</file>
-            <file>file:/C:/Controllab/Client/src/student/BlockWeb.java</file>
+            <file>file:/C:/Controllab/Client/src/student/desktop.ini</file>
         </group>
     </open-files>
 </project-private>

@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,47 +27,18 @@ public class BlockWeb {
     Timer timer;
     String host = "192.168.1.125";
     //String host = "localhost";
-
-    public BlockWeb() {
+     ArrayList<String> WebList;
+    public BlockWeb(String banWebList) {
+         String str[] = banWebList.split(",");
+	ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(str));
+        this.WebList = arrayList;
         timer = new Timer();
         timer.schedule(blockweb, 0, 60 * 10 * 1000);
     }
-
-    private ArrayList<String> GetBanList() {
-        ArrayList<String> BanWebList = new ArrayList<>();
-        Connection connection = getconnect();
-        String sql = "SELECT * FROM `banweb` WHERE `Co_Title` = '" + Student.Subject + "' AND `Co_Section` = '" + Student.Section + "'";
-        PreparedStatement pre;
-        ResultSet rs;
-        try {
-            pre = connection.prepareStatement(sql);
-            rs = pre.executeQuery();
-            String ban;
-            while (rs.next()) {
-                ban = rs.getString("Name");
-                BanWebList.add(ban);
-            }
-        } catch (SQLException ex) {
-        }
-        return BanWebList;
-    }
-
-    public Connection getconnect() {
-        Connection con;
-        String url = "jdbc:mysql://"+host+"/controllab";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, "root", "");
-            return con;
-        } catch (ClassNotFoundException | SQLException ex) {
-            return null;
-        }
-    }
-
     TimerTask blockweb = new TimerTask() {
         @Override
         public void run() {
-            ArrayList<String> BanWebList = GetBanList();
+            ArrayList<String> BanWebList = WebList;
             File file = new File("C:\\Controllab\\hosts");
             FileWriter writer;
             try {

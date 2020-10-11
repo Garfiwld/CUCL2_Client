@@ -28,6 +28,7 @@ import static student.StudentLogin.a;
  * @author PC2
  */
 public class resetPassword {
+    static int port = 25103;
     public static void setNewPassword(){
         System.out.println("setpassword");
         JTextField jpf = new JPasswordField(15);
@@ -39,7 +40,7 @@ public class resetPassword {
            String result = jpf.getText();
            try{
            System.out.println("SocketNewpassword");
-           Socket s = new Socket("192.168.1.125",35600);
+           Socket s = new Socket("192.168.1.125",port);
            PrintWriter out = new PrintWriter(s.getOutputStream());
            out.println(StudentLogin.myStudent.getUsername());
            out.println(result);
