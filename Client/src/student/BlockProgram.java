@@ -54,7 +54,7 @@ public class BlockProgram {
     String Viewer;
     String exec_command = "tasklist.exe /FO LIST";
     Timer timer;
-    String host = "192.168.1.125";
+
     ArrayList<String> solftwareList;
     //String host = "localhost";
 

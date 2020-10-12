@@ -30,7 +30,7 @@ public class ReciveMsg {
     PrintWriter out;
     public String msg;
     static int port;
-    String host = "192.168.1.125";
+
     ReciveMsg(int port){
         this.port = port;
     }

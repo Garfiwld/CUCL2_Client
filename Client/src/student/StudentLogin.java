@@ -38,7 +38,7 @@ public class StudentLogin extends javax.swing.JFrame {
     static Student b;
     static boolean c = false;
     static String StudentID;
-    String host = "192.168.1.125";
+    public static String host = "192.168.1.125";
     //String host = "localhost";
     public StudentLogin() {
         System.out.println("loginna");
@@ -95,7 +95,7 @@ public class StudentLogin extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             System.out.println("Loginpress");
-            Socket s = new Socket(host, 37000);
+            Socket s = new Socket(host, 25102);
             PrintWriter out1 = new PrintWriter(s.getOutputStream());
             out1.println("login");
             out1.flush();
@@ -144,15 +144,35 @@ public class StudentLogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(StudentLogin.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        b = new Student(26101,25102);
+        Socket s = new Socket(host, 25101);
+        PrintWriter out = new PrintWriter(s.getOutputStream());
+        InetAddress inetAddress = InetAddress.getLocalHost();
+        InetAddress address = InetAddress.getByName(inetAddress.getHostAddress());
+        NetworkInterface ni =  NetworkInterface.getByInetAddress(address);
+        byte[] mac = ni.getHardwareAddress();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < mac.length; i++) {
+            sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+        }
+        myStudent.setIp(inetAddress.getHostAddress());
+        System.out.println(inetAddress.getHostAddress());
+        System.out.println(sb.toString());
+        out.println(inetAddress.getHostAddress());
+        out.println(sb.toString());
+        out.flush();
+        s.close();
+        b = new Student(26101);
+       
         b.study();
-        ReciveMsg rm = new ReciveMsg(26102);
+        ReciveMsg rm = new ReciveMsg(26103);
         rm.recive();
         a = new StudentLogin();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 a.setVisible(true);
                 a.getContentPane().setBackground(Color.DARK_GRAY);
+                
             }
         });
     }

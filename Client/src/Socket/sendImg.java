@@ -58,7 +58,7 @@ public class sendImg {
         obj.put("Des",Des);
         //connection to erver
         System.out.println("Connect");
-        Socket socket= new Socket("192.168.1.125", port);
+        Socket socket= new Socket(StudentLogin.host, port);
         DataOutputStream outToServer=new DataOutputStream(socket.getOutputStream());
 
         //send data

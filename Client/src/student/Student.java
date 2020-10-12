@@ -32,7 +32,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import static student.StudentLogin.StudentID;
 import static student.StudentLogin.a;
+import static student.StudentLogin.myStudent;
 
 /**
  *
@@ -52,9 +54,9 @@ public class Student {
     //String host = "localhost";
     boolean p;
 
-    Student(int port, int sender){
+    Student(int port){
         this.port = port;
-        this.sender = sender;
+       
     }
     public void study() {
        
@@ -68,8 +70,8 @@ public class Student {
         public void run() {
             String msg;
             try {
-                System.out.print("Start"+port);
-                ss = new ServerSocket(port);
+
+                ss = new ServerSocket(26101);
                 while (true) {
                     r = ss.accept();
                     read = new BufferedReader(new InputStreamReader(r.getInputStream()));
@@ -127,40 +129,4 @@ public class Student {
             }
         }
     });
-
-
-    Thread Sender = new Thread(new Runnable() {
-        Timer myTimer = new Timer();
-
-        @Override
-        public void run() {
-            myTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    try {
-                        System.out.println("testPrint");
-                        s = new Socket("192.168.1.125", sender);
-                        PrintWriter out = new PrintWriter(s.getOutputStream());
-                        InetAddress inetAddress = InetAddress.getLocalHost();
-                        InetAddress address = InetAddress.getByName(inetAddress.getHostAddress());
-                        NetworkInterface ni =  NetworkInterface.getByInetAddress(address);
-                        byte[] mac = ni.getHardwareAddress();
-                        StringBuilder sb = new StringBuilder();
-                        
-                        for (int i = 0; i < mac.length; i++) {
-                            sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
-                        }
-                        System.out.println(inetAddress.getHostAddress());
-                        System.out.println(sb.toString());
-                        out.println(inetAddress.getHostAddress());
-                        out.println(sb.toString());
-                        out.flush();
-                        s.close();
-                    } catch (IOException ex) {
-                    }
-                }
-            }, 0, 8000);
-        }
-    });
-
 }

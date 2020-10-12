@@ -25,7 +25,7 @@ import java.util.TimerTask;
 public class BlockWeb {
 
     Timer timer;
-    String host = "192.168.1.125";
+
     //String host = "localhost";
      ArrayList<String> WebList;
     public BlockWeb(String banWebList) {
