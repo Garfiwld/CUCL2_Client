@@ -40,7 +40,7 @@ public class resetPassword {
            String result = jpf.getText();
            try{
            System.out.println("SocketNewpassword");
-           Socket s = new Socket(StudentLogin.host,port);
+           Socket s = new Socket("192.168.1.103",25103);
            PrintWriter out = new PrintWriter(s.getOutputStream());
            out.println(StudentLogin.myStudent.getUsername());
            out.println(result);
@@ -48,8 +48,7 @@ public class resetPassword {
            out.close();
            a.setVisible(false);
             }catch (IOException e){
-                
-                
+                System.out.print(e);
             }
         }
     }

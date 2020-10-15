@@ -7,34 +7,16 @@ package student;
 
 import form.resetPassword;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import static student.StudentLogin.StudentID;
 import static student.StudentLogin.a;
-import static student.StudentLogin.myStudent;
 
 /**
  *
@@ -50,16 +32,17 @@ public class Student {
     int port;
     int sender;
     static String Subject, Section, StudentID;
-    String host = "192.168.1.125";
+    String host = "192.168.1.103";
     //String host = "localhost";
     boolean p;
 
-    Student(int port){
+    Student(int port) {
         this.port = port;
-       
+
     }
+
     public void study() {
-       
+
         Reciver.start();
 
     }
@@ -76,26 +59,9 @@ public class Student {
                     r = ss.accept();
                     read = new BufferedReader(new InputStreamReader(r.getInputStream()));
                     msg = read.readLine();
-                    System.out.println(msg);
+                    System.out.println("Student msg : " + msg);
                     switch (msg) {
-                        case "Shutdown":
-                            try {
-                                System.out.println("Shutdown");
-//                                Runtime.getRuntime().exec("cmd /c C:\\Controllab\\shutdown.bat");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            break;
-                        case "Restart":
-                            try {
-                                System.out.println("Restart");
-//                                Runtime.getRuntime().exec("cmd /c C:\\Controllab\\restart.bat");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            break;
-                        case "success":
-                            System.out.println("inSuccess");
+                        case "LoginSuccess":
                             JOptionPane.showMessageDialog(a.getContentPane(), "login Successfully");
 //                            Subject = read.readLine();
 //                            System.out.println(Subject);
@@ -107,25 +73,33 @@ public class Student {
                             String status = read.readLine();
                             String course = read.readLine();
                             StudentLogin.myStudent.setCourse(course);
-                            if (status.equals("yes")) {
-                                System.out.println("in");
+
+                            if (status.equals("Yes")) {
                                 resetPassword.setNewPassword();
-                            }else a.setVisible(false);
+                            } else {
+                                a.setVisible(false);
+                            }
+
                             String banSoftewareList = read.readLine();
                             String banWebList = read.readLine();
-                            new BlockProgram(banSoftewareList);
-                            new BlockWeb(banWebList);
-//                            StudentLogin.a();
+                            if (!banSoftewareList.equals("")) {
+                                new BlockProgram(banSoftewareList);
+                            }
+                            if (!banWebList.equals("")) {
+                                new BlockWeb(banWebList);
+                            }
+
                             break;
-                        case "failedC":
-                            JOptionPane.showMessageDialog(a.getContentPane(), "Login Failed Course Not Exits");
+                        case "StudentNotInCourse":
+                            JOptionPane.showMessageDialog(a.getContentPane(), "You not register in class.");
                             break;
-                         case "failedCre":
-                            JOptionPane.showMessageDialog(a.getContentPane(), "Login Failed Credential Invalid");
+                        case "LoginFailed":
+                            JOptionPane.showMessageDialog(a.getContentPane(), "Username oe Password Invalid.");
                             break;
                     }
                 }
             } catch (IOException e) {
+                System.out.println(e);
             }
         }
     });

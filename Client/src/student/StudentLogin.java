@@ -38,7 +38,8 @@ public class StudentLogin extends javax.swing.JFrame {
     static Student b;
     static boolean c = false;
     static String StudentID;
-    public static String host = "192.168.1.125";
+    public static String host = "192.168.1.103";
+
     //String host = "localhost";
     public StudentLogin() {
         System.out.println("loginna");
@@ -47,13 +48,13 @@ public class StudentLogin extends javax.swing.JFrame {
         //setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         initComponents();
-        
 
         Dimension position = Toolkit.getDefaultToolkit().getScreenSize();
         jTextField1.setBounds(position.width / 2 - (jTextField1.getPreferredSize().width / 2), position.height / 2, jTextField1.getPreferredSize().width, jTextField1.getPreferredSize().height);
         jPasswordField1.setBounds(position.width / 2 - (jTextField1.getPreferredSize().width / 2), position.height / 2 + jTextField1.getPreferredSize().height + 10, jTextField1.getPreferredSize().width, jTextField1.getPreferredSize().height);
         jButton1.setBounds(position.width / 2 - (jButton1.getPreferredSize().width / 2), position.height / 2 + 100, jButton1.getPreferredSize().width, jButton1.getPreferredSize().height);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -94,7 +95,7 @@ public class StudentLogin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            System.out.println("Loginpress");
+            System.out.println("Login Press");
             Socket s = new Socket(host, 25102);
             PrintWriter out1 = new PrintWriter(s.getOutputStream());
             out1.println("login");
@@ -116,10 +117,9 @@ public class StudentLogin extends javax.swing.JFrame {
     public static void a() {
         a.setVisible(false);
     }
+
     public static void main(String args[]) throws IOException, InterruptedException {
 
- 
-                
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -148,7 +148,7 @@ public class StudentLogin extends javax.swing.JFrame {
         PrintWriter out = new PrintWriter(s.getOutputStream());
         InetAddress inetAddress = InetAddress.getLocalHost();
         InetAddress address = InetAddress.getByName(inetAddress.getHostAddress());
-        NetworkInterface ni =  NetworkInterface.getByInetAddress(address);
+        NetworkInterface ni = NetworkInterface.getByInetAddress(address);
         byte[] mac = ni.getHardwareAddress();
         StringBuilder sb = new StringBuilder();
 
@@ -156,6 +156,7 @@ public class StudentLogin extends javax.swing.JFrame {
             sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
         }
         myStudent.setIp(inetAddress.getHostAddress());
+        myStudent.setMacaddress(sb.toString());
         System.out.println(inetAddress.getHostAddress());
         System.out.println(sb.toString());
         out.println(inetAddress.getHostAddress());
@@ -163,7 +164,7 @@ public class StudentLogin extends javax.swing.JFrame {
         out.flush();
         s.close();
         b = new Student(26101);
-       
+
         b.study();
         ReciveMsg rm = new ReciveMsg(26103);
         rm.recive();
@@ -172,7 +173,7 @@ public class StudentLogin extends javax.swing.JFrame {
             public void run() {
                 a.setVisible(true);
                 a.getContentPane().setBackground(Color.DARK_GRAY);
-                
+
             }
         });
     }

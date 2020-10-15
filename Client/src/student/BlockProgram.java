@@ -6,43 +6,14 @@
 package student;
 
 import Socket.sendImg;
-import java.awt.AWTException;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.HeadlessException;
-import java.awt.List;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import java.util.Date;
 
 /**
  *
@@ -95,7 +66,7 @@ public class BlockProgram {
             for (int i = 0; i < Ban.size(); i++) {
                 for (int j = 0; j < Data.size(); j++) {
 
-                    if (Data.get(j).toUpperCase().matches(Ban.get(i).toUpperCase() + ".*")) {
+                    if (Data.get(j).toUpperCase().matches(Ban.get(i).toUpperCase())) {
                         try {
                             System.out.println(Ban.get(i));
                             String temp = captureImage.CapImg();

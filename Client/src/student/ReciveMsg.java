@@ -5,19 +5,12 @@
  */
 package student;
 
-import form.resetPassword;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Connection;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import static student.StudentLogin.a;
 
 /**
  *
@@ -47,25 +40,33 @@ public class ReciveMsg {
         public void run() {
             String msg;
             try {
-                System.out.print("Start"+port);
+                System.out.println("ReciveMsg port : "+port);
                 ss = new ServerSocket(port);
                 while (true) {
                     r = ss.accept();
                     read = new BufferedReader(new InputStreamReader(r.getInputStream()));
                     msg = read.readLine();
-                    System.out.println(msg);
+                    System.out.println("ReciveMsg msg : "+msg);
                     switch (msg) {
                         case "Shutdown":
+                            System.out.println("case : Shutdown");
                             try {
-                                System.out.println("Shutdown");
 //                                Runtime.getRuntime().exec("cmd /c C:\\Controllab\\shutdown.bat");
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             break;
                         case "Restart":
+                            System.out.println("case : Restart");
                             try {
-                                System.out.println("Restart");
+//                                Runtime.getRuntime().exec("cmd /c C:\\Controllab\\restart.bat");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "LockScreen":
+                            System.out.println("case : LockScreen");
+                            try {
 //                                Runtime.getRuntime().exec("cmd /c C:\\Controllab\\restart.bat");
                             } catch (Exception e) {
                                 e.printStackTrace();
