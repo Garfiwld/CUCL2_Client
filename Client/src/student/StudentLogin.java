@@ -137,24 +137,22 @@ public class StudentLogin extends javax.swing.JFrame {
         /*
         *   MatchMac
         */
-        Socket socketMatchMac = new SocketConnect().socketMatchMac();
-        PrintWriter out = new PrintWriter(socketMatchMac.getOutputStream());
-        InetAddress inetAddress = InetAddress.getLocalHost();
-        InetAddress address = InetAddress.getByName(inetAddress.getHostAddress());
-        
-        NetworkInterface ni = NetworkInterface.getByInetAddress(address);
+        InetAddress localhost = InetAddress.getLocalHost();
+        InetAddress hostaddress = InetAddress.getByName(localhost.getHostAddress());
+        NetworkInterface ni = NetworkInterface.getByInetAddress(hostaddress);
         byte[] mac = ni.getHardwareAddress();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < mac.length; i++) {
             sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
         }
-        
-//        StudentModel studentModel = new StudentModel();
-        studentModel.setIpv4(inetAddress.getHostAddress());
-        System.out.println("StudentLogin#inetAddress.getHostAddress() : "+inetAddress.getHostAddress());
+        studentModel.setIpv4(localhost.getHostAddress());
+        System.out.println("StudentLogin#inetAddress.getHostAddress() : "+localhost.getHostAddress());
         studentModel.setMacaddress(sb.toString());
         System.out.println("StudentLogin#sb.toString() : "+sb.toString());
-        out.println(inetAddress.getHostAddress());
+        
+        Socket socketMatchMac = new SocketConnect().socketMatchMac();
+        PrintWriter out = new PrintWriter(socketMatchMac.getOutputStream());
+        out.println(localhost.getHostAddress());
         out.println(sb.toString());
         out.flush();
         socketMatchMac.close();

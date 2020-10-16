@@ -14,7 +14,7 @@ import java.net.Socket;
  */
 public class SocketConnect {
     
-    private final String host = "192.168.1.103";
+    private final String host = "192.168.1.101";
     private final int portMatchMac = 25101;
     private final int portLogin = 25102;
     private final int portResetPassword = 25103;
