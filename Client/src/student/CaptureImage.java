@@ -5,6 +5,7 @@
  */
 package student;
 
+import Model.StudentModel;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -27,26 +28,28 @@ import javax.imageio.ImageIO;
  *
  * @author PC2
  */
-public class captureImage {
-    public static String CapImg(){
+
+public class CaptureImage {
+//    StudentModel studentModel = new StudentModel();
+    public String CapImg(){
+        StudentModel studentModel = new StudentModel();
         try{
         byte[] b;
             File f;
             int c;
             InputStream in;
             OutputStream out;
-            String StudentID = StudentLogin.myStudent.getUsername();
+            String StudentID = studentModel.getStudentid();
             Robot robot = new Robot();
             BufferedImage screenShot = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-            DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-            DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
-            String time = dateFormat1.format(date);
-            String time2 = dateFormat2.format(date);
-            String name = StudentID + "_" + time + ".jpg";
-            String nm_file = "C:\\Controllab\\picture\\" + name;
-            ImageIO.write(screenShot, "JPG", new File(nm_file));
-            BufferedImage image = ImageIO.read(new File(nm_file));
+            DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+            String datetime = dateFormat1.format(date);
+            studentModel.setDatetime(datetime);
+            String filename = StudentID + "_" + datetime + ".jpg";
+            String pathFile = "C:\\Controllab\\picture\\" + filename;
+            ImageIO.write(screenShot, "JPG", new File(pathFile));
+            BufferedImage image = ImageIO.read(new File(pathFile));
             Graphics g = image.getGraphics();
             g.setColor(Color.WHITE);
             g.fillRect(90, 50, 310, 70);
@@ -54,11 +57,11 @@ public class captureImage {
             g.setFont(g.getFont().deriveFont(40f));
             g.drawString(StudentID, 100, 100);
             g.dispose();
-            return nm_file;
+            return pathFile;
         } catch (AWTException ex) {
-            Logger.getLogger(captureImage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CaptureImage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(captureImage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CaptureImage.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

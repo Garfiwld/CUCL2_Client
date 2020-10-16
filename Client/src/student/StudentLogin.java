@@ -5,24 +5,20 @@
  */
 package student;
 
+import Socket.ReciveStudentLogin;
+import Socket.ReciveMsg;
 import Model.StudentModel;
-import Socket.sendImg;
+import connect.SocketConnect;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -30,19 +26,12 @@ import javax.imageio.ImageIO;
  */
 public class StudentLogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form StudentLogin
-     */
-    public static StudentModel myStudent = new StudentModel();
-    public static StudentLogin a;
-    static Student b;
-    static boolean c = false;
-    static String StudentID;
-    public static String host = "192.168.1.103";
-
-    //String host = "localhost";
+    static StudentModel studentModel = new StudentModel();
+    SocketConnect socketConnect = new SocketConnect();
+    public static StudentLogin studentLogin;
+    
     public StudentLogin() {
-        System.out.println("loginna");
+        System.out.println("StudentLogin#StudentLogin()");
         //setUndecorated(true);
         setExtendedState(this.MAXIMIZED_BOTH);
         //setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -94,29 +83,31 @@ public class StudentLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
         try {
             System.out.println("Login Press");
-            Socket s = new Socket(host, 25102);
-            PrintWriter out1 = new PrintWriter(s.getOutputStream());
-            out1.println("login");
-            out1.flush();
-            String myip = myStudent.getIp();
-            out1.println(myip);
-            out1.println(jTextField1.getText());
-            StudentID = jTextField1.getText();
-            myStudent.setUsername(StudentID);
-            out1.flush();
-            out1.println(String.valueOf(jPasswordField1.getPassword()));
-            out1.println(myStudent.getMacaddress());
-            out1.flush();
-            out1.close();
+            Socket socketLogin = new SocketConnect().socketLogin();
+            PrintWriter out = new PrintWriter(socketLogin.getOutputStream());
+            
+            out.println("login");
+            out.println(studentModel.getIpv4());
+            String StudentID = jTextField1.getText();
+            studentModel.setStudentid(StudentID);
+            out.println(StudentID);
+            String sPassword = String.valueOf(jPasswordField1.getPassword());
+            out.println(sPassword);
+            out.println(studentModel.getMacaddress());
+            
+            out.flush();
+            out.close();
+            
         } catch (IOException ex) {
-            Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReciveStudentLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-    public static void a() {
-        a.setVisible(false);
-    }
+//    public static void a() {
+//        a.setVisible(false);
+//    }
 
     public static void main(String args[]) throws IOException, InterruptedException {
 
@@ -125,7 +116,6 @@ public class StudentLogin extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
                 }
             }
         } catch (ClassNotFoundException ex) {
@@ -144,36 +134,44 @@ public class StudentLogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(StudentLogin.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        Socket s = new Socket(host, 25101);
-        PrintWriter out = new PrintWriter(s.getOutputStream());
+        /*
+        *   MatchMac
+        */
+        Socket socketMatchMac = new SocketConnect().socketMatchMac();
+        PrintWriter out = new PrintWriter(socketMatchMac.getOutputStream());
         InetAddress inetAddress = InetAddress.getLocalHost();
         InetAddress address = InetAddress.getByName(inetAddress.getHostAddress());
+        
         NetworkInterface ni = NetworkInterface.getByInetAddress(address);
         byte[] mac = ni.getHardwareAddress();
         StringBuilder sb = new StringBuilder();
-
         for (int i = 0; i < mac.length; i++) {
             sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
         }
-        myStudent.setIp(inetAddress.getHostAddress());
-        myStudent.setMacaddress(sb.toString());
-        System.out.println(inetAddress.getHostAddress());
-        System.out.println(sb.toString());
+        
+//        StudentModel studentModel = new StudentModel();
+        studentModel.setIpv4(inetAddress.getHostAddress());
+        System.out.println("StudentLogin#inetAddress.getHostAddress() : "+inetAddress.getHostAddress());
+        studentModel.setMacaddress(sb.toString());
+        System.out.println("StudentLogin#sb.toString() : "+sb.toString());
         out.println(inetAddress.getHostAddress());
         out.println(sb.toString());
         out.flush();
-        s.close();
-        b = new Student(26101);
-
-        b.study();
-        ReciveMsg rm = new ReciveMsg(26103);
+        socketMatchMac.close();
+        
+        /*
+        *
+        */
+        ReciveStudentLogin student = new ReciveStudentLogin();
+        student.study();
+        ReciveMsg rm = new ReciveMsg();
         rm.recive();
-        a = new StudentLogin();
+        
+        studentLogin = new StudentLogin();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                a.setVisible(true);
-                a.getContentPane().setBackground(Color.DARK_GRAY);
-
+                studentLogin.setVisible(true);
+                studentLogin.getContentPane().setBackground(Color.DARK_GRAY);
             }
         });
     }

@@ -5,18 +5,15 @@
  */
 package student;
 
+import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
+import com.google.gson.Gson;
 
 /**
  *
@@ -24,40 +21,46 @@ import java.util.TimerTask;
  */
 public class BlockWeb {
 
-    Timer timer;
+    ArrayList<String> WebList = null;
 
-    //String host = "localhost";
-     ArrayList<String> WebList;
     public BlockWeb(String banWebList) {
-         String str[] = banWebList.split(",");
-	ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(str));
+
+        Gson gson = new Gson();
+
+        Type listType = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        ArrayList<String> arrayList = gson.fromJson(banWebList, listType);
         this.WebList = arrayList;
-        timer = new Timer();
-        timer.schedule(blockweb, 0, 60 * 10 * 1000);
+        Timer timer = new Timer();
+        timer.schedule(blockweb, 0, 60 * 1000);
     }
+
     TimerTask blockweb = new TimerTask() {
         @Override
         public void run() {
             ArrayList<String> BanWebList = WebList;
-            File file = new File("C:\\Controllab\\hosts");
-            FileWriter writer;
-            try {
-                writer = new FileWriter(file, false);
-                for (int i = 0; i < BanWebList.size(); i++) {
-                    writer.write(" 	0.0.0.0         http://www." + BanWebList.get(i) + " \r\n");
-                    writer.write(" 	0.0.0.0 	http://" + BanWebList.get(i) + " \r\n");
-                    writer.write(" 	0.0.0.0 	www." + BanWebList.get(i) + " \r\n");
-                    writer.write(" 	0.0.0.0 	" + BanWebList.get(i) + " \r\n");
-                    System.out.println("Write " + BanWebList.get(i) + "success!");
+            if (BanWebList != null) {
+                File file = new File("C:\\Controllab\\hosts");
+                FileWriter writer;
+                try {
+                    writer = new FileWriter(file, false);
+                    for (int i = 0; i < BanWebList.size(); i++) {
+                        writer.write(" 	0.0.0.0         http://www." + BanWebList.get(i) + " \r\n");
+                        writer.write(" 	0.0.0.0 	http://" + BanWebList.get(i) + " \r\n");
+                        writer.write(" 	0.0.0.0 	www." + BanWebList.get(i) + " \r\n");
+                        writer.write(" 	0.0.0.0 	" + BanWebList.get(i) + " \r\n");
+                        System.out.println("Write " + BanWebList.get(i) + " success!");
+                    }
+                    writer.close();
+                } catch (IOException e) {
+                    System.out.println(e);
                 }
-                writer.close();
-            } catch (IOException e) {
-            }
-            try {
+                try {
 
-                Runtime.getRuntime().exec("cmd /c C:\\Controllab\\a.lnk");
-            } catch (IOException ex) {
-                System.out.println(ex);
+                    Runtime.getRuntime().exec("cmd /c C:\\Controllab\\a.lnk");
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
             }
         }
     };

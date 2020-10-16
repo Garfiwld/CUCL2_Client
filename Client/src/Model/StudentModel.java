@@ -5,36 +5,62 @@
  */
 package Model;
 
-import java.net.InetAddress;
-
 /**
  *
  * @author PC2
  */
 public class StudentModel {
-    String ip,macaddress,username,Course;
-    public void setMacaddress(String Macaddress){
-        this.macaddress = Macaddress;
+    protected static String ipv4,macaddress,studentid,course,section,datetime;
+
+    public static String getDatetime() {
+        return datetime;
     }
-    public String getMacaddress(){
-        return this.macaddress;
+
+    public static void setDatetime(String datetime) {
+        StudentModel.datetime = datetime;
     }
-    public void setIp(String ip){
-        this.ip = ip;
+
+    public static String getSection() {
+        return section;
     }
-    public String getIp(){
-        return this.ip;
+
+    public static void setSection(String section) {
+        StudentModel.section = section;
     }
-    public void setUsername(String Username){
-        this.username = Username;
+
+    public StudentModel() {
     }
-    public String getUsername(){
-        return this.username;
+
+    public String getIpv4() {
+        return ipv4;
     }
-    public void setCourse(String Course){
-        this.Course = Course;
+
+    public void setIpv4(String ipv4) {
+        this.ipv4 = ipv4;
     }
-    public String getCourse(){
-        return this.Course;
+
+    public String getMacaddress() {
+        return macaddress;
     }
+
+    public void setMacaddress(String macaddress) {
+        this.macaddress = macaddress;
+    }
+
+    public String getStudentid() {
+        return studentid;
+    }
+
+    public void setStudentid(String studentid) {
+        this.studentid = studentid;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+    
 }

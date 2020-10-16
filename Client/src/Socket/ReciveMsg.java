@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package student;
+package Socket;
 
+import connect.SocketConnect;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,36 +17,26 @@ import java.net.Socket;
  * @author PC2
  */
 public class ReciveMsg {
-     public ServerSocket ss;
-    public Socket r, s;
-    public BufferedReader read;
-    PrintWriter out;
-    public String msg;
-    static int port;
 
-    ReciveMsg(int port){
-        this.port = port;
-    }
-    
+    SocketConnect socketConnect = new SocketConnect();
+
     public void recive() {
-        
+
         ReciveMsg.start();
 
     }
     Thread ReciveMsg = new Thread(new Runnable() {
-        BufferedReader bufferRead = null;
-
+        
         @Override
         public void run() {
-            String msg;
             try {
-                System.out.println("ReciveMsg port : "+port);
-                ss = new ServerSocket(port);
+//                ServerSocket serversocketStudent = socketConnect.serversocketReciveMsg();
+                ServerSocket serversocketStudent = new ServerSocket(26103);
                 while (true) {
-                    r = ss.accept();
-                    read = new BufferedReader(new InputStreamReader(r.getInputStream()));
-                    msg = read.readLine();
-                    System.out.println("ReciveMsg msg : "+msg);
+                    Socket readAccept = serversocketStudent.accept();
+                    BufferedReader read = new BufferedReader(new InputStreamReader(readAccept.getInputStream()));
+                    String msg = read.readLine();
+                    System.out.println("ReciveMsg msg : " + msg);
                     switch (msg) {
                         case "Shutdown":
                             System.out.println("case : Shutdown");
@@ -74,10 +64,9 @@ public class ReciveMsg {
                             break;
                     }
                 }
-            } catch (IOException e) {
-                
+            } catch (IOException ex) {
+                System.out.println(ex);
             }
         }
     });
 }
-
