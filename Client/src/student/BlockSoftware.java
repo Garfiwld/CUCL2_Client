@@ -21,12 +21,12 @@ import java.lang.reflect.Type;
  *
  * @author admin
  */
-public class BlockProgram {
+public class BlockSoftware {
 
     String exec_command = "tasklist.exe /FO LIST";
     ArrayList<String> solftwareList;
 
-    public BlockProgram(String bansoftwareList) {
+    public BlockSoftware(String bansoftwareList) {
         
         Gson gson = new Gson();
         

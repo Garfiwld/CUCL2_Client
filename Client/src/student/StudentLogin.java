@@ -31,7 +31,7 @@ public class StudentLogin extends javax.swing.JFrame {
     public static StudentLogin studentLogin;
     
     public StudentLogin() {
-        System.out.println("StudentLogin#StudentLogin()");
+        
         //setUndecorated(true);
         setExtendedState(this.MAXIMIZED_BOTH);
         //setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

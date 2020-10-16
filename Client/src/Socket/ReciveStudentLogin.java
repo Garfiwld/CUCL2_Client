@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import student.BlockProgram;
+import student.BlockSoftware;
 import student.BlockWeb;
 import student.StudentLogin;
 
@@ -57,7 +57,7 @@ public class ReciveStudentLogin {
                             studentModel.setCourse(course);
                             String status = read.readLine();
                             System.out.println("Student#status : " + status);
-                            if (status.equals("Yes")) {
+                            if (status.equals("First")) {
                                 JTextField jpf = new JPasswordField(15);
                                 JLabel jl = new JLabel("Please input your new password");
                                 Object object[] = {jpf, jl};
@@ -84,15 +84,16 @@ public class ReciveStudentLogin {
                             String banSoftewareList = read.readLine();
                             System.out.println("banSoftewareList " + banSoftewareList);
                             String banWebList = read.readLine();
+                            System.out.println("banWebList " + banWebList);
                             if (!banSoftewareList.equals("")) {
-                                new BlockProgram(banSoftewareList);
+                                new BlockSoftware(banSoftewareList);
                             }
                             if (!banWebList.equals("")) {
                                 new BlockWeb(banWebList);
                             }
 
                             break;
-                        case "StudentNotInCourse":
+                        case "RoomOffline":
                             JOptionPane.showMessageDialog(studentLogin.getContentPane(), "You not register in class.");
                             break;
                         case "LoginFailed":

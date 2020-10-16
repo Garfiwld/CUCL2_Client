@@ -32,36 +32,36 @@ public class BlockWeb {
         ArrayList<String> arrayList = gson.fromJson(banWebList, listType);
         this.WebList = arrayList;
         Timer timer = new Timer();
-        timer.schedule(blockweb, 0, 60 * 1000);
-    }
-
-    TimerTask blockweb = new TimerTask() {
-        @Override
-        public void run() {
-            ArrayList<String> BanWebList = WebList;
-            if (BanWebList != null) {
-                File file = new File("C:\\Controllab\\hosts");
-                FileWriter writer;
-                try {
-                    writer = new FileWriter(file, false);
-                    for (int i = 0; i < BanWebList.size(); i++) {
-                        writer.write(" 	0.0.0.0         http://www." + BanWebList.get(i) + " \r\n");
-                        writer.write(" 	0.0.0.0 	http://" + BanWebList.get(i) + " \r\n");
-                        writer.write(" 	0.0.0.0 	www." + BanWebList.get(i) + " \r\n");
-                        writer.write(" 	0.0.0.0 	" + BanWebList.get(i) + " \r\n");
-                        System.out.println("Write " + BanWebList.get(i) + " success!");
-                    }
-                    writer.close();
-                } catch (IOException e) {
-                    System.out.println(e);
+//        timer.schedule(blockweb, 0, 60 * 1000);
+//    }
+//
+//    TimerTask blockweb = new TimerTask() {
+//        @Override
+//        public void run() {
+        ArrayList<String> BanWebList = WebList;
+        if (BanWebList != null) {
+            File file = new File("C:\\Controllab\\hosts");
+            FileWriter writer;
+            try {
+                writer = new FileWriter(file, false);
+                for (int i = 0; i < BanWebList.size(); i++) {
+                    writer.write(" 	0.0.0.0         http://www." + BanWebList.get(i) + " \r\n");
+                    writer.write(" 	0.0.0.0 	http://" + BanWebList.get(i) + " \r\n");
+                    writer.write(" 	0.0.0.0 	www." + BanWebList.get(i) + " \r\n");
+                    writer.write(" 	0.0.0.0 	" + BanWebList.get(i) + " \r\n");
+                    System.out.println("Write " + BanWebList.get(i) + " success!");
                 }
-                try {
+                writer.close();
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+            try {
 
-                    Runtime.getRuntime().exec("cmd /c C:\\Controllab\\a.lnk");
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                }
+                Runtime.getRuntime().exec("cmd /c C:\\Controllab\\a.lnk");
+            } catch (IOException ex) {
+                System.out.println(ex);
             }
         }
-    };
+    }
+//};
 }
